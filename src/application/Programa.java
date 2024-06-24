@@ -20,22 +20,25 @@ public class Programa {
 		System.out.print("Entre com a data Check-out (dd/MM/yyyy): ");
 		Date checkOut = sdf.parse(sc.next());
 
-		if (!checkOut.after(checkIn)) {
+		if (!checkOut.after(checkIn)) { //Se checkOut não for depois de checkIn faça
 			System.out.println("Erro na reserva: Data Check-Out deve ser maior que data de Check-In. ");
 
 		} 
-		else {
+		else { 
 			Reserva reserva = new Reserva(number, checkIn, checkOut);
 			System.out.println("Reserva: " + reserva);
 
 			System.out.println();
-			System.out.println("Entre com a data para atualizar a reserva: ");
+			System.out.println("Entre com a data para atualizar a reserva: "); 
 			System.out.print("Entre com a data Check-in (dd/MM/yyyy): ");
 			checkIn = sdf.parse(sc.next());
 			System.out.print("Entre com a data Check-out (dd/MM/yyyy): ");
 			checkOut = sdf.parse(sc.next());
 
-			Date now = new Date();
+			// Essa forma de corrigir excecões não é considerada de boa prática.
+			// Pois é realizada dentro no programa principal.
+			// E o ideal é ela ser tratada dentro da classe Reserva ↓↓
+			Date now = new Date(); 
 			if (checkIn.before(now) || checkOut.before(now)) {
 				System.out.println("Erro na reserva: Datas de atualização devem ser datas futuras");
 			} 
@@ -69,4 +72,13 @@ Entre com a data Check-out (dd/MM/yyyy): 26/08/2024
 Erro na reserva: Data Check-Out deve ser maior que data de Check-In. 
 */
 
-/**/
+/*Número quarto: 8021
+Entre com a data Check-in (dd/MM/yyyy): 23/09/2024
+Entre com a data Check-out (dd/MM/yyyy): 26/09/2024
+Reserva: Quarto: 8021, Check-In: 23/09/2024, Check-Out: 26/09/2024, 3 noites
+
+Entre com a data para atualizar a reserva: 
+Entre com a data Check-in (dd/MM/yyyy): 24/09/2024
+Entre com a data Check-out (dd/MM/yyyy): 29/09/2024
+Reserva: Quarto: 8021, Check-In: 24/09/2024, Check-Out: 29/09/2024, 5 noites
+*/
