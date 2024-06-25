@@ -43,21 +43,18 @@ public class Reserva {
 
 	}
 
-	public String updateDates(Date checkIn, Date checkOut) { // Altero void para retornar String
+	public void updateDates(Date checkIn, Date checkOut) { 
+		// Volta a ser void pois lançará uma exceção ao invés de retornar um erro.
 		Date now = new Date();
 		if (checkIn.before(now) || checkOut.before(now)) {
-			return "Erro na reserva: Datas de atualização devem ser datas futuras";
-		} // return corta método retiro else
+			throw new IllegalArgumentException("Erro na reserva: Datas de atualização devem ser datas futuras");
+		} 
 		if (!checkOut.after(checkIn)) {
-			return "Erro na reserva: Data Check-Out deve ser maior que data de Check-In. ";
-		}
-
+			throw new IllegalArgumentException("Erro na reserva: Data Check-Out deve ser maior que data de Check-In. ");
+		} 
+		//'IllegalArgumentException' é usado quando os argumentos são inválidos e assim lanço uma exceção.
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
-		return  null; // Se retorna null não deu Erro. 
-		/*Pois se acontecer de ser excutado cada
-		 bloco e atualizar as datas terá que retornar uma Sring. 
-		 Porém para indicar que não retornou erro eu vou retonar 'null'   */
 	}
 
 	@Override
