@@ -34,22 +34,15 @@ public class Programa {
 			checkIn = sdf.parse(sc.next());
 			System.out.print("Entre com a data Check-out (dd/MM/yyyy): ");
 			checkOut = sdf.parse(sc.next());
-
-			// Essa forma de corrigir excecões não é considerada de boa prática.
-			// Pois é realizada dentro no programa principal.
-			// E o ideal é ela ser tratada dentro da classe Reserva ↓↓
-			Date now = new Date(); 
-			if (checkIn.before(now) || checkOut.before(now)) {
-				System.out.println("Erro na reserva: Datas de atualização devem ser datas futuras");
-			} 
-			else if (!checkOut.after(checkIn)) {
-				System.out.println("Erro na reserva: Data Check-Out deve ser maior que data de Check-In. ");
-			} 
-			else {
-				reserva.updateDates(checkIn, checkOut);
-				System.out.println("Reserva: " + reserva);
+			
+			String erro = reserva.updateDates(checkIn, checkOut);
+			if ( erro != null) { 
+				System.out.println("Erro na reserva: " + erro);
 			}
+			System.out.println("Reserva: " + reserva);
 		}
+		
+		
 		sc.close();
 	}
 }
@@ -60,16 +53,8 @@ Entre com a data Check-out (dd/MM/yyyy): 26/09/2024
 Reserva: Quarto: 8021, Check-In: 23/09/2024, Check-Out: 26/09/2024, 3 noites
 
 Entre com a data para atualizar a reserva: 
-Entre com a data Check-in (dd/MM/yyyy): 24/09/2019
-Entre com a data Check-out (dd/MM/yyyy): 29/09/2019
-Erro na reserva: Datas de atualização devem ser datas futuras
-*/
-
-
-/*Número quarto: 8021
-Entre com a data Check-in (dd/MM/yyyy): 23/09/2024
-Entre com a data Check-out (dd/MM/yyyy): 26/08/2024
-Erro na reserva: Data Check-Out deve ser maior que data de Check-In. 
+Entre com a data Check-in (dd/MM/yyyy): 24/09/2024
+Entre com a data Check-out (dd/MM/yyyy): 29/09/2024
 */
 
 /*Número quarto: 8021
@@ -78,7 +63,8 @@ Entre com a data Check-out (dd/MM/yyyy): 26/09/2024
 Reserva: Quarto: 8021, Check-In: 23/09/2024, Check-Out: 26/09/2024, 3 noites
 
 Entre com a data para atualizar a reserva: 
-Entre com a data Check-in (dd/MM/yyyy): 24/09/2024
-Entre com a data Check-out (dd/MM/yyyy): 29/09/2024
-Reserva: Quarto: 8021, Check-In: 24/09/2024, Check-Out: 29/09/2024, 5 noites
+Entre com a data Check-in (dd/MM/yyyy): 24/09/2015
+Entre com a data Check-out (dd/MM/yyyy): 29/09/2015
+Erro na reserva: Erro na reserva: Datas de atualização devem ser datas futuras
+Reserva: Quarto: 8021, Check-In: 23/09/2024, Check-Out: 26/09/2024, 3 noites
 */

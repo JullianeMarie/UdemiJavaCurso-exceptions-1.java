@@ -9,11 +9,11 @@ public class Reserva {
 	private Integer roomNumber;
 	private Date checkIn;
 	private Date checkOut;
-	
+
 	private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	// Intancio static pois não preciso instanciar um novo SimpleDateFormat.
 	// Para cada objeto Reserva que a aplicação tiver.
-	
+
 	public Reserva(Integer roomNumber, Date checkIn, Date checkOut) {
 		super();
 		this.roomNumber = roomNumber;
@@ -37,16 +37,27 @@ public class Reserva {
 		return checkOut;
 	}
 
-	public long Duracao() { //Tipo long para milessegundos
+	public long Duracao() { // Tipo long para milessegundos
 		long diff = checkOut.getTime() - checkIn.getTime();
-		return TimeUnit.DAYS.convert(diff,TimeUnit.MILLISECONDS); //Converte milessegundos para dia. 
-		
+		return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS); // Converte milessegundos para dia.
+
 	}
-	
-	public void updateDates (Date checkIn, Date checkOut) {
+
+	public String updateDates(Date checkIn, Date checkOut) { // Altero void para retornar String
+		Date now = new Date();
+		if (checkIn.before(now) || checkOut.before(now)) {
+			return "Erro na reserva: Datas de atualização devem ser datas futuras";
+		} // return corta método retiro else
+		if (!checkOut.after(checkIn)) {
+			return "Erro na reserva: Data Check-Out deve ser maior que data de Check-In. ";
+		}
+
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
-			
+		return  null; // Se retorna null não deu Erro. 
+		/*Pois se acontecer de ser excutado cada
+		 bloco e atualizar as datas terá que retornar uma Sring. 
+		 Porém para indicar que não retornou erro eu vou retonar 'null'   */
 	}
 
 	@Override
@@ -58,12 +69,5 @@ public class Reserva {
 		sb.append(Duracao() + " noites");
 		return sb.toString();
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 }
