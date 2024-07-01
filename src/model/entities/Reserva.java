@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import model.exceptions.DomainExcepetion;
+
 public class Reserva {
 
 	private Integer roomNumber;
@@ -14,8 +16,13 @@ public class Reserva {
 	// Intancio static pois não preciso instanciar um novo SimpleDateFormat.
 	// Para cada objeto Reserva que a aplicação tiver.
 
-	public Reserva(Integer roomNumber, Date checkIn, Date checkOut) {
-		super();
+	public Reserva(Integer roomNumber, Date checkIn, Date checkOut) throws DomainExcepetion {
+		if (!checkOut.after(checkIn)) {
+			throw new DomainExcepetion("Erro na reserva: Data Check-Out deve ser maior que data de Check-In. ");
+		} 
+		/* Inicio a lógica de verificar se a data de check-in é menor que a data de checkout
+		 * no escopo dos métodos pois é de boa prática(Programação Defensiva).
+		 */
 		this.roomNumber = roomNumber;
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
@@ -43,16 +50,17 @@ public class Reserva {
 
 	}
 
-	public void updateDates(Date checkIn, Date checkOut) { 
+	public void updateDates(Date checkIn, Date checkOut) throws DomainExcepetion { 
 		// Volta a ser void pois lançará uma exceção ao invés de retornar um erro.
+		// throws DomainExcepetion para o método lançar exceção.
+	
 		Date now = new Date();
 		if (checkIn.before(now) || checkOut.before(now)) {
-			throw new IllegalArgumentException("Erro na reserva: Datas de atualização devem ser datas futuras");
+			throw new DomainExcepetion("Erro na reserva: Datas de atualização devem ser datas futuras");
 		} 
 		if (!checkOut.after(checkIn)) {
-			throw new IllegalArgumentException("Erro na reserva: Data Check-Out deve ser maior que data de Check-In. ");
+			throw new DomainExcepetion("Erro na reserva: Data Check-Out deve ser maior que data de Check-In. ");
 		} 
-		//'IllegalArgumentException' é usado quando os argumentos são inválidos e assim lanço uma exceção.
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
 	}

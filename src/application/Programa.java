@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Scanner;
 
 import model.entities.Reserva;
+import model.exceptions.DomainExcepetion;
 
 public class Programa {
 
@@ -37,8 +38,8 @@ public class Programa {
 		catch (ParseException e){ 
 			System.out.println("Data formato inválido");
 		}
-		catch (IllegalArgumentException e) {
-			//Bloco para capturar a exceção.
+		catch (DomainExcepetion e) {
+			//Bloco para capturar a exceção.Alterado para DomainException
 			System.out.println(e.getMessage());
 		}
 		
